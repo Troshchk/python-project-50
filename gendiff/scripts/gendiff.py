@@ -10,7 +10,7 @@ def main():
     parser.add_argument('first_file')
     parser.add_argument('second_file')
     parser.add_argument('--format', '-f', help="set format of output")
-    args = parser.parse_args(None if sys.argv[2:] else ['-h'])
+    args = parser.parse_args(None if sys.argv[1:] else ['-h'])
     return args
 
 
