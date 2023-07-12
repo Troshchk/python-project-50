@@ -1,0 +1,6 @@
+- follow: None
+host: hexlet.io
+- proxy: None
+- timeout: 50
++ timeout: 20
++ verbose: True
