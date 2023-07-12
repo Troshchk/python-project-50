@@ -3,18 +3,18 @@ import pytest
 
 @pytest.fixture
 def get_file1_path():
-    return "/Users/ktroshchenkova/python-project-50/tests/fixtures/file1.json"
+    return "./tests/fixtures/file1.json"
 
 
 @pytest.fixture
 def get_file2_path():
-    return "/Users/ktroshchenkova/python-project-50/tests/fixtures/file2.json"
+    return "./tests/fixtures/file2.json"
 
 
 @pytest.fixture
 def get_res_diff():
     f = open(
-        "/Users/ktroshchenkova/python-project-50/tests/fixtures/test_output1",
+        "./tests/fixtures/test_output1",
         "r")
     test_output = f.read()
     f.close()
