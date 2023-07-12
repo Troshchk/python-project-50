@@ -29,7 +29,7 @@ def create_sring(diff_dict):
             out_str += f"- {k}: {v[1]}\n"
         else:
             out_str += f"- {k}: {v[0]}\n+ {k}: {v[1]}\n"
-    return out_str
+    return out_str.rstrip()
 
 
 def generate_diff(file1, file2):
