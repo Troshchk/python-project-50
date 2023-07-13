@@ -24,17 +24,23 @@ def create_parser():
 
 
 def create_sring(diff_dict):
-    out_str = ""
+    out_str = "{\n"
     for k, v in diff_dict.items():
-        if v[0] == v[1]:
-            out_str += f"{k}: {v[0]}\n"
-        elif v[0] is None:
-            out_str += f"+ {k}: {v[1]}\n"
-        elif v[1] is None:
-            out_str += f"- {k}: {v[1]}\n"
+        v0, v1 = v
+        print(v0, v1)
+        v0 = jsonify(v0)
+        v1 = jsonify(v1)
+        print(v0, v1)
+        if v0 == v1:
+            out_str += f"    {k}: {v0}\n"
+        elif v0 is None:
+            out_str += f"  + {k}: {v1}\n"
+        elif v1 is None:
+            out_str += f"  - {k}: {v0}\n"
         else:
-            out_str += f"- {k}: {v[0]}\n+ {k}: {v[1]}\n"
-    return out_str.rstrip()
+            out_str += f"  - {k}: {v0}\n  + {k}: {v1}\n"
+    out_str += "}"
+    return out_str
 
 
 def generate_diff(file1, file2):
