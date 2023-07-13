@@ -25,7 +25,7 @@ def create_parser():
 
 def jsonify(v):
     if isinstance(v, bool):
-        return str(v)[:1].lower() + str(v)[1:]
+        return json.dumps(v)
     return v
 
 
