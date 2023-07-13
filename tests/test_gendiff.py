@@ -23,6 +23,4 @@ def get_res_diff():
 
 def test_simple_case(get_file1_path, get_file2_path, get_res_diff):
     out = gendiff.generate_diff(get_file1_path, get_file2_path)
-    print(out)
-    print(get_res_diff)
     assert out == get_res_diff
