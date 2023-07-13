@@ -5,6 +5,14 @@ import json
 
 
 def main():
+    parser = create_parser()
+    args = parser.parse_args(None if sys.argv[1:] else ['-h'])
+    if args.first_file and args.second_file:
+        return generate_diff(args.first_file, args.second_file)
+    return args
+
+
+def create_parser():
     parser = argparse.ArgumentParser(
                     prog='gendiff',
                     description='''Compares two configuration files and shows
@@ -12,10 +20,7 @@ def main():
     parser.add_argument('first_file')
     parser.add_argument('second_file')
     parser.add_argument('--format', '-f', help="set format of output")
-    args = parser.parse_args(None if sys.argv[1:] else ['-h'])
-    if args.first_file and args.second_file:
-        return generate_diff(args.first_file, args.second_file)
-    return args
+    return parser
 
 
 def create_sring(diff_dict):
