@@ -23,6 +23,12 @@ def create_parser():
     return parser
 
 
+def jsonify(v):
+    if isinstance(v, bool):
+        return str(v)[:1].lower() + str(v)[1:]
+    return v
+
+
 def create_sring(diff_dict):
     out_str = "{\n"
     for k, v in diff_dict.items():
