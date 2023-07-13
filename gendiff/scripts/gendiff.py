@@ -2,6 +2,7 @@
 import argparse
 import sys
 import json
+import yaml
 
 
 def main():
@@ -49,9 +50,17 @@ def create_sring(diff_dict):
     return out_str
 
 
+def load_file(file_path):
+    extension = file_path.split(".")[-1].strip()
+    if extension == "json":
+        return json.load(open(file_path))
+    if extension in ["yaml", "yml"]:
+        return yaml.safe_load(open(file_path))
+
+
 def generate_diff(file1, file2):
-    f1 = json.load(open(file1))
-    f2 = json.load(open(file2))
+    f1 = load_file(file1)
+    f2 = load_file(file2)
     diff_dict = {}
     for k1, v1 in f1.items():
         diff_dict[k1] = (v1, f2.get(k1, None))
