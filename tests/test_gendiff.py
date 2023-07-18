@@ -61,6 +61,16 @@ def get_res_diff_nested():
     return test_output
 
 
+@pytest.fixture
+def get_res_diff_nested_plain():
+    f = open(
+        "./tests/fixtures/output_plain",
+        "r")
+    test_output = f.read()
+    f.close()
+    return test_output
+
+
 def test_simple_case_jsons(get_file1_json_path, get_file2_json_path, get_res_diff):
     out = gendiff.generate_diff(get_file1_json_path, get_file2_json_path)
     assert out == get_res_diff
@@ -89,3 +99,8 @@ def test_nested_case_json_and_yaml(get_file1_nested_json_path, get_file2_nested_
 def test_nested_case_yamls(get_file1_nested_yaml_path, get_file2_nested_yaml_path, get_res_diff_nested):
     out = gendiff.generate_diff(get_file1_nested_yaml_path, get_file2_nested_yaml_path)
     assert out == get_res_diff_nested
+
+
+def test_nested_plain(get_file1_nested_json_path, get_file2_nested_json_path, get_res_diff_nested_plain):
+    out = gendiff.generate_diff(get_file1_nested_json_path, get_file2_nested_json_path, format="plain")
+    assert out == get_res_diff_nested_plain
