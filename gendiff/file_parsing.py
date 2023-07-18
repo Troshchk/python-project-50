@@ -34,10 +34,16 @@ def load_file(file_path):
 def compare_data(data1, data2):
     diff_dict = {}
     for k1, v1 in data1.items():
-        diff_dict[k1] = (v1, data2.get(k1, None))
+        if k1 in data2.keys():
+            if isinstance(data2[k1], dict):
+                diff_dict[k1] = compare_data(data1[k1], data2[k1])
+            else:
+                diff_dict[k1] = (v1, data2[k1])
+        else:
+            diff_dict[k1] = (v1, data2.get(k1, NotSet()))
     for k2, v2 in data2.items():
         if k2 not in diff_dict.keys():
-            diff_dict[k2] = (data1.get(k2, None), v2)
+            diff_dict[k2] = (data1.get(k2, NotSet()), v2)
     return dict(sorted(diff_dict.items()))
 
 
