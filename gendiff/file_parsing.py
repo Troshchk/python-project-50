@@ -45,9 +45,24 @@ def compare_values(v0, v1):
         comparison_result = ["- ", "+ "]
         vals = [v0, v1]
     return comparison_result, vals
+
+
+def create_string(diff_dict, indent="  ", out_str=""):
+    out_str += "{\n"
+    for k, v_in in diff_dict.items():
+        if not isinstance(v_in, dict):
+            v0, v1 = [v if isinstance(v, dict) else jsonify(v) for v in v_in]
+            v0, v1 = [create_dict_structure(v, indent=indent+NEW_LEVEL) if isinstance(v, dict) else v for v in [v0, v1]]
+            comparison_result, vals = compare_values(v0, v1)
+            for i in zip(comparison_result, vals):
+                comparison_result, value = i[0], i[1]
+                out_str += PATTERN.format(indent, comparison_result, k, value)
         else:
-            out_str += f"  - {k}: {v0}\n  + {k}: {v1}\n"
-    out_str += "}"
+            comparison_result = "  "
+            value = create_string(v_in, out_str='', indent=indent+NEW_LEVEL)
+            out_str += PATTERN2.format(indent, comparison_result, k, value)
+    out_str += f"{indent.replace('  ', '', 1)}"
+    out_str += "}\n"
     return out_str
 
 
