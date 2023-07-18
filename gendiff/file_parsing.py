@@ -17,6 +17,18 @@ class NotSet:
 
 
 def create_dict_structure(input_dict, indent):
+    out_str_from_dict = "{\n"
+    for k, v in input_dict.items():
+        if not isinstance(v, dict):
+            value = v
+        else:
+            value = create_dict_structure(v, indent+NEW_LEVEL)
+        addition = "  "
+        out_str_from_dict += PATTERN2.format(indent, addition, k, value)
+        out_str_from_dict += "\n"
+    out_str_from_dict += f"{indent.replace('  ', '', 1)}"
+    out_str_from_dict += "}"
+    return out_str_from_dict
         else:
             out_str += f"  - {k}: {v0}\n  + {k}: {v1}\n"
     out_str += "}"
