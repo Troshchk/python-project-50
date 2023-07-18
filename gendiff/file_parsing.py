@@ -52,7 +52,7 @@ def compare_values(v0, v1):
     return comparison_result, vals
 
 
-def create_string(diff_dict, indent="  ", out_str=""):
+def stylish(diff_dict, indent="  ", out_str=""):
     out_str += "{\n"
     for k, v_in in diff_dict.items():
         if not isinstance(v_in, dict):
@@ -65,7 +65,7 @@ def create_string(diff_dict, indent="  ", out_str=""):
                 out_str += PATTERN.format(indent, comparison_result, k, value)
         else:
             comparison_result = "  "
-            value = create_string(v_in, out_str='', indent=indent+NEW_LEVEL)
+            value = stylish(v_in, out_str='', indent=indent+NEW_LEVEL)
             out_str += PATTERN2.format(indent, comparison_result, k, value)
     out_str += f"{indent.replace('  ', '', 1)}"
     out_str += "}\n"
