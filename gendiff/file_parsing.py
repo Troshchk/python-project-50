@@ -29,6 +29,22 @@ def create_dict_structure(input_dict, indent):
     out_str_from_dict += f"{indent.replace('  ', '', 1)}"
     out_str_from_dict += "}"
     return out_str_from_dict
+
+
+def compare_values(v0, v1):
+    if v0 == v1:
+        comparison_result = ["  "]
+        vals = [v0]
+    elif isinstance(v0, NotSet):
+        comparison_result = ["+ "]
+        vals = [v1]
+    elif isinstance(v1, NotSet):
+        comparison_result = ["- "]
+        vals = [v0]
+    else:
+        comparison_result = ["- ", "+ "]
+        vals = [v0, v1]
+    return comparison_result, vals
         else:
             out_str += f"  - {k}: {v0}\n  + {k}: {v1}\n"
     out_str += "}"
