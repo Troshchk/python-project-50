@@ -8,17 +8,13 @@ def jsonify(v):
     return v
 
 
-def create_sring(diff_dict):
-    out_str = "{\n"
-    for k, v in diff_dict.items():
-        v0, v1 = map(jsonify, v)
-        print(v0, v1)
-        if v0 == v1:
-            out_str += f"    {k}: {v0}\n"
-        elif v0 is None:
-            out_str += f"  + {k}: {v1}\n"
-        elif v1 is None:
-            out_str += f"  - {k}: {v0}\n"
+class NotSet:
+    """A class to distinguish null from jsom/yaml from None meaning the value
+    does not exist in the input """
+    isset = False
+
+
+def create_dict_structure(input_dict, indent):
         else:
             out_str += f"  - {k}: {v0}\n  + {k}: {v1}\n"
     out_str += "}"
