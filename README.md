@@ -13,3 +13,6 @@
 
 ### Comparing yaml files
 [![asciicast](https://asciinema.org/a/nDPBpkp0c9M6UjMHWVsxI8R10.svg)](https://asciinema.org/a/nDPBpkp0c9M6UjMHWVsxI8R10)
+
+### Working with nested files
+[![asciicast](https://asciinema.org/a/rqQvjt5OEkKcezNrlZByM2UG5.svg)](https://asciinema.org/a/rqQvjt5OEkKcezNrlZByM2UG5)
