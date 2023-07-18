@@ -57,7 +57,8 @@ def create_string(diff_dict, indent="  ", out_str=""):
     for k, v_in in diff_dict.items():
         if not isinstance(v_in, dict):
             v0, v1 = [v if isinstance(v, dict) else jsonify(v) for v in v_in]
-            v0, v1 = [create_dict_structure(v, indent=indent+NEW_LEVEL) if isinstance(v, dict) else v for v in [v0, v1]]
+            v0, v1 = [create_dict_structure(v, indent=indent+NEW_LEVEL)
+                      if isinstance(v, dict) else v for v in [v0, v1]]
             comparison_result, vals = compare_values(v0, v1)
             for i in zip(comparison_result, vals):
                 comparison_result, value = i[0], i[1]
