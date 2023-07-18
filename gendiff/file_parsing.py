@@ -96,8 +96,9 @@ def compare_data(data1, data2):
     return dict(sorted(diff_dict.items()))
 
 
-def generate_diff(file1, file2):
+def generate_diff(file1, file2, format):
     f1, f2 = map(load_file, [file1, file2])
     diff_dict = compare_data(f1, f2)
-    out_str = create_string(diff_dict)
+    if format in [None, "stylish"]:
+        out_str = stylish(diff_dict)
     return out_str.rstrip()
