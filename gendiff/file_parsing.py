@@ -2,6 +2,11 @@ import json
 import yaml
 
 
+NEW_LEVEL = "    "
+PATTERN = "{}{}{}: {}\n"
+PATTERN2 = "{}{}{}: {}"
+
+
 def jsonify(v):
     if isinstance(v, bool):
         return json.dumps(v)
