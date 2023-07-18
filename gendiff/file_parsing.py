@@ -7,6 +7,7 @@ PATTERN = "{}{}{}: {}\n"
 PATTERN2 = "{}{}{}: {}"
 PATTERN_PLAIN = "Property '{}' was {}\n"
 
+
 def jsonify(v):
     if isinstance(v, bool):
         return json.dumps(v)
@@ -70,7 +71,9 @@ def compare_values_for_plain(v0, v1):
     elif isinstance(v1, NotSet):
         comparison_result = "removed"
     else:
-        comparison_result = f"updated. From {format_string(v0)} to {format_string(v1)}"
+        v0 = format_string(v0)
+        v1 = format_string(v1)
+        comparison_result = f"updated. From {v0} to {v1}"
     return comparison_result
 
 
@@ -99,10 +102,10 @@ def plain(diff_dict, key=''):
     for k, v_in in diff_dict.items():
         if not isinstance(v_in, dict):
             v0, v1 = v_in
-            #v0, v1 = [v if isinstance(v, dict) else jsonify(v) for v in v_in]
             comparison_result = compare_values_for_plain(v0, v1)
             if comparison_result is not None:
-                out_str += PATTERN_PLAIN.format(f"{key}.{k}".lstrip("."), comparison_result)
+                out_str += PATTERN_PLAIN.format(f"{key}.{k}".lstrip("."),
+                                                comparison_result)
         else:
             comparison_result = plain(v_in, key=f"{key}.{k}")
             out_str += comparison_result
