@@ -1,8 +1,8 @@
 import json
 import yaml
-from parsers.stylish_parser import stylish
-from parsers.plain_parser import plain
-from parsers.json_parser import json_parser
+from .parsers.stylish_parser import stylish
+from .parsers.plain_parser import plain
+from .parsers.json_parser import json_parser
 
 
 def load_file(file_path):
