@@ -34,10 +34,6 @@ def compare_data(data1, data2):
 
 def generate_diff(file1, file2, format=None):
     f1, f2 = map(load_file, [file1, file2])
-    if not isinstance(f1, dict):
-        return "One of the inputs is wrong"
-    if not isinstance(f2, dict):
-        return "One of the inputs is wrong"
     diff_dict = compare_data(f1, f2)
     if format in [None, "stylish"]:
         out_str = stylish(diff_dict).rstrip()
