@@ -18,17 +18,25 @@ def compare_data(data1, data2):
     This is necessary to distinguish None from input and values,
     which are not set"""
     diff_dict = {}
-    for k1, v1 in data1.items():
-        if k1 in data2.keys():
-            if isinstance(data2[k1], dict):
-                diff_dict[k1] = compare_data(data1[k1], data2[k1])
-            else:
-                diff_dict[k1] = (v1, data2[k1], True, True)
+    if isinstance(data1, dict):
+        if isinstance(data2, dict):
+            for k1, v1 in data1.items():
+                if k1 in data2.keys():
+                    if isinstance(data2[k1], dict):
+                        diff_dict[k1] = compare_data(data1[k1], data2[k1])
+                    else:
+                        diff_dict[k1] = (v1, data2[k1], True, True)
+                else:
+                    diff_dict[k1] = (v1, None, True, False)
+            for k2, v2 in data2.items():
+                if k2 not in diff_dict.keys():
+                    diff_dict[k2] = (None, v2, False, True)
         else:
-            diff_dict[k1] = (v1, None, True, False)
-    for k2, v2 in data2.items():
-        if k2 not in diff_dict.keys():
-            diff_dict[k2] = (None, v2, False, True)
+            diff_dict[k1] = (data1, data2, True, True)
+    elif isinstance(data2, dict):
+        for k2, v2 in data2.items():
+            if k2 not in diff_dict.keys():
+                diff_dict[k2] = (None, v2, False, True)
     return dict(sorted(diff_dict.items()))
 
 
