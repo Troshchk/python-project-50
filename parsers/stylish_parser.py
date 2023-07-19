@@ -26,7 +26,7 @@ def create_dict_structure(input_dict, indent):
         if not isinstance(v, dict):
             value = v
         else:
-            value = create_dict_structure(v, indent+NEW_LEVEL)
+            value = create_dict_structure(v, indent + NEW_LEVEL)
         addition = "  "
         out_str_from_dict += PATTERN.format(indent, addition, k, value)
         out_str_from_dict += "\n"
@@ -41,7 +41,7 @@ def stylish(diff_dict, indent="  ", out_str=""):
         if not isinstance(v_in, dict):
             v0, v1 = [v if isinstance(v, dict) else
                       jsonify(v) for v in v_in[:2]]
-            v0, v1 = [create_dict_structure(v, indent=indent+NEW_LEVEL)
+            v0, v1 = [create_dict_structure(v, indent=indent + NEW_LEVEL)
                       if isinstance(v, dict) else v for v in [v0, v1]]
             v0_set, v1_set = v_in[2:]
             comparison_result, vals = compare_values(v0, v1, v0_set, v1_set)
@@ -51,7 +51,7 @@ def stylish(diff_dict, indent="  ", out_str=""):
                 out_str += "\n"
         else:
             comparison_result = "  "
-            value = stylish(v_in, out_str='', indent=indent+NEW_LEVEL)
+            value = stylish(v_in, out_str='', indent=indent + NEW_LEVEL)
             out_str += PATTERN.format(indent, comparison_result, k, value)
     out_str += f"{indent.replace('  ', '', 1)}"
     out_str += "}\n"
