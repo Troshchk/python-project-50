@@ -1,0 +1,110 @@
+{
+    "common": {
+        "follow": [
+            null,
+            false,
+            false,
+            true
+        ],
+        "setting1": [
+            "Value 1",
+            "Value 1",
+            true,
+            true
+        ],
+        "setting2": [
+            200,
+            null,
+            true,
+            false
+        ],
+        "setting3": [
+            true,
+            null,
+            true,
+            true
+        ],
+        "setting4": [
+            null,
+            "blah blah",
+            false,
+            true
+        ],
+        "setting5": [
+            null,
+            {
+                "key5": "value5"
+            },
+            false,
+            true
+        ],
+        "setting6": {
+            "doge": {
+                "wow": [
+                    "",
+                    "so much",
+                    true,
+                    true
+                ]
+            },
+            "key": [
+                "value",
+                "value",
+                true,
+                true
+            ],
+            "ops": [
+                null,
+                "vops",
+                false,
+                true
+            ]
+        }
+    },
+    "group1": {
+        "baz": [
+            "bas",
+            "bars",
+            true,
+            true
+        ],
+        "foo": [
+            "bar",
+            "bar",
+            true,
+            true
+        ],
+        "nest": [
+            {
+                "key": "value"
+            },
+            "str",
+            true,
+            true
+        ]
+    },
+    "group2": [
+        {
+            "abc": 12345,
+            "deep": {
+                "id": 45
+            }
+        },
+        null,
+        true,
+        false
+    ],
+    "group3": [
+        null,
+        {
+            "deep": {
+                "id": {
+                    "number": 45
+                }
+            },
+            "fee": 100500
+        },
+        false,
+        true
+    ]
+}
