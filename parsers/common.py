@@ -1,10 +1,5 @@
 import json
 
-class NotSet:
-    """A class to distinguish null from jsom/yaml from None meaning the value
-    does not exist in the input """
-    isset = False
-
 
 def jsonify(v):
     if isinstance(v, bool):

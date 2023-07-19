@@ -1,6 +1,7 @@
-from .common import NotSet, jsonify
+from .common import jsonify
 
 PATTERN_PLAIN = "Property '{}' was {}\n"
+
 
 def format_string(v):
     if isinstance(v, str):
@@ -12,12 +13,12 @@ def format_string(v):
     return v
 
 
-def compare_values_for_plain(v0, v1):
+def compare_values(v0, v1, v0_set, v1_set):
     if v0 == v1:
         comparison_result = None
-    elif isinstance(v0, NotSet):
+    elif v0_set is False:
         comparison_result = f"added with value: {format_string(v1)}"
-    elif isinstance(v1, NotSet):
+    elif v1_set is False:
         comparison_result = "removed"
     else:
         v0 = format_string(v0)
@@ -30,8 +31,8 @@ def plain(diff_dict, key=''):
     out_str = ""
     for k, v_in in diff_dict.items():
         if not isinstance(v_in, dict):
-            v0, v1 = v_in
-            comparison_result = compare_values_for_plain(v0, v1)
+            v0, v1, v0_set, v1_set = v_in
+            comparison_result = compare_values(v0, v1, v0_set, v1_set)
             if comparison_result is not None:
                 out_str += PATTERN_PLAIN.format(f"{key}.{k}".lstrip("."),
                                                 comparison_result)
