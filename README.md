@@ -19,3 +19,6 @@
 
 ### Add plain format for the output
 [![asciicast](https://asciinema.org/a/YsneJSS9KzHDrqeTp1J6cZnjb.svg)](https://asciinema.org/a/YsneJSS9KzHDrqeTp1J6cZnjb)
+
+### Final usage demo
+[![asciicast](https://asciinema.org/a/w2pCtK95yJJrXwfG8DZ7r70cm.svg)](https://asciinema.org/a/w2pCtK95yJJrXwfG8DZ7r70cm)
