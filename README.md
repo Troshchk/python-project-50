@@ -16,3 +16,6 @@
 
 ### Working with nested files
 [![asciicast](https://asciinema.org/a/rqQvjt5OEkKcezNrlZByM2UG5.svg)](https://asciinema.org/a/rqQvjt5OEkKcezNrlZByM2UG5)
+
+### Add plain format for the output
+[![asciicast](https://asciinema.org/a/YsneJSS9KzHDrqeTp1J6cZnjb.svg)](https://asciinema.org/a/YsneJSS9KzHDrqeTp1J6cZnjb)
