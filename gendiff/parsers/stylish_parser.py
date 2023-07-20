@@ -20,14 +20,13 @@ def compare_values(v0, v1, v0_set, v1_set):
     return comparison_result, vals
 
 
-def create_dict_structure(input_dict, indent):
+def create_dict_structure(input_dict, indent, addition = "  "):
     out_str_from_dict = "{\n"
     for k, v in input_dict.items():
         if not isinstance(v, dict):
             value = v
         else:
             value = create_dict_structure(v, indent + NEW_LEVEL)
-        addition = "  "
         out_str_from_dict += PATTERN.format(indent, addition, k, value)
         out_str_from_dict += "\n"
     out_str_from_dict += f"{indent.replace('  ', '', 1)}"
