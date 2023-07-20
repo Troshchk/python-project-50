@@ -13,7 +13,7 @@ def load_file(file_path):
         return yaml.safe_load(open(file_path))
 
 
-def compare_data(data1, data2):
+def compare_data(data1, data2, key_above=None):
     """Output contains values and info whether the value was set in the input.
     This is necessary to distinguish None from input and values,
     which are not set"""
