@@ -34,9 +34,7 @@ def compare_data(data1, data2):
         else:
             diff_dict[k1] = (data1, data2, True, True)
     elif isinstance(data2, dict):
-        for k2, v2 in data2.items():
-            if k2 not in diff_dict.keys():
-                diff_dict[k2] = (None, v2, False, True)
+        return (data1, data2, True, True)
     return dict(sorted(diff_dict.items()))
 
 
