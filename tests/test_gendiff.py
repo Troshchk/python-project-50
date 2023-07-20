@@ -119,3 +119,34 @@ def test_nested_case_plain(get_file1_nested_json_path, get_file2_nested_json_pat
 def test_nested_case_plain(get_file1_nested_json_path, get_file2_nested_json_path, get_json_nested_output):
     out = gendiff.generate_diff(get_file1_nested_json_path, get_file2_nested_json_path, format="json")
     assert out == get_json_nested_output
+
+
+
+@pytest.fixture
+def get_file3():
+    return "./tests/fixtures/file3.json"
+
+
+@pytest.fixture
+def get_file4():
+    return "./tests/fixtures/file4.json"
+
+
+@pytest.fixture
+def get_hex_out():
+    f = open(
+        "./tests/fixtures/output_hexlet_tests",
+        "r")
+    test_output = f.read()
+    f.close()
+    return test_output
+
+
+def test_hex_case_stylish(get_file3, get_file4, get_hex_out):
+    out = gendiff.generate_diff(get_file3, get_file4)
+    assert out == get_hex_out
+
+
+#def test_hex_plain(get_file3, get_file4, get_hex_out):
+#    out = gendiff.generate_diff(get_file3, get_file4, format="plain")
+#    assert out == get_hex_out
