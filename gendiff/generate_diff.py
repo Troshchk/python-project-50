@@ -23,7 +23,8 @@ def compare_data(data1, data2, key_above=None):
             for k1, v1 in data1.items():
                 if k1 in data2.keys():
                     if isinstance(data2[k1], dict):
-                        diff_dict[k1] = compare_data(data1[k1], data2[k1], key_above=k1)
+                        diff_dict[k1] = compare_data(data1[k1], data2[k1],
+                                                     key_above=k1)
                     else:
                         diff_dict[k1] = (v1, data2[k1], True, True)
                 else:
