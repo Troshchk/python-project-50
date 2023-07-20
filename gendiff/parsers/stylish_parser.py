@@ -20,7 +20,7 @@ def compare_values(v0, v1, v0_set, v1_set):
     return comparison_result, vals
 
 
-def create_dict_structure(input_dict, indent, addition = "  "):
+def create_dict_structure(input_dict, indent, addition="  "):
     out_str_from_dict = "{\n"
     for k, v in input_dict.items():
         if not isinstance(v, dict):
@@ -42,16 +42,24 @@ def stylish(diff_dict, indent="  ", out_str=""):
                       jsonify(v) for v in v_in[:2]]
             v0_set, v1_set = v_in[2:]
             comparison_result, vals = compare_values(v0, v1, v0_set, v1_set)
-            if len(comparison_result) == 2 and isinstance(v1, dict) and not isinstance(v0, dict):
+            vals = [create_dict_structure(v, indent=indent + NEW_LEVEL)
+                    if isinstance(v, dict) else v for v in vals]
+            for i in zip(comparison_result, vals):
+                comparison_result, value = i[0], i[1]
+                out_str += PATTERN.format(indent, comparison_result, k, value)
+                out_str += "\n"
+            '''if len(comparison_result) == 2
+            and isinstance(v1, dict) and not isinstance(v0, dict):
                 comparison_result = ["  "]
-                vals = [create_dict_structure(v1, indent=indent + NEW_LEVEL, addition="+ ")]
+                vals = [create_dict_structure(v1, indent=indent + NEW_LEVEL,
+                addition="+ ")]
             else:
                 vals= [create_dict_structure(v, indent=indent + NEW_LEVEL)
                             if isinstance(v, dict) else v for v in vals]
             for i in zip(comparison_result, vals):
                 comparison_result, value = i[0], i[1]
                 out_str += PATTERN.format(indent, comparison_result, k, value)
-                out_str += "\n"
+                out_str += "\n"'''
         else:
             comparison_result = "  "
             value = stylish(v_in, out_str='', indent=indent + NEW_LEVEL)
