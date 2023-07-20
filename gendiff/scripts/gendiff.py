@@ -8,9 +8,10 @@ def main():
     parser = create_parser()
     args = parser.parse_args(None if sys.argv[1:] else ['-h'])
     if args.first_file and args.second_file:
-        generate_diff(args.first_file,
-                      args.second_file,
-                      format=args.format)
+        output = generate_diff(args.first_file,
+                               args.second_file,
+                               format=args.format)
+        return output
     return
 
 
