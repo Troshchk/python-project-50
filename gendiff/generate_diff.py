@@ -44,9 +44,9 @@ def generate_diff(file1, file2, format=None):
     print(f2)
     diff_dict = compare_data(f1, f2)
     if format in [None, "stylish"]:
-        out_str = stylish(diff_dict).rstrip()
+        out_str = stylish(diff_dict).rstrip("\n")
     elif format == "plain":
-        out_str = plain(diff_dict).rstrip()
+        out_str = plain(diff_dict).rstrip("\n")
     elif format == "json":
         return json_parser(diff_dict)
     return out_str
