@@ -21,9 +21,12 @@ LOADERS = {"json": load_json, "yaml": load_yaml, "yml": load_yaml}
 
 
 def compare_data(data1, data2):
-    """Output contains values and info whether the value was set in the input.
-    This is necessary to distinguish None from input and values,
-    which are not set"""
+    """Output format:
+    (val_1st_input, val_2nd_input, val_is_in_1st_input, val_is_in_2nd_input)
+    First two fields are field values from the input.
+    Second two fields contain info whether the field values exist in the input.
+    This is necessary to distinguish None coming from input and None specifying,
+    that the field value does not exist in the input"""
     diff_dict = {}
     if isinstance(data1, dict) and isinstance(data2, dict):
         for k1, v1 in data1.items():
