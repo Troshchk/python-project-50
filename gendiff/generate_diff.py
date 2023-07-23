@@ -5,12 +5,19 @@ from .parsers.plain_parser import plain
 from .parsers.json_parser import json_parser
 
 
-def load_file(file_path):
-    extension = file_path.split(".")[-1].strip()
-    if extension == "json":
-        return json.load(open(file_path))
-    if extension in ["yaml", "yml"]:
-        return yaml.safe_load(open(file_path))
+def load_json(file_path):
+    return json.load(open(file_path))
+
+
+def load_yaml(file_path):
+    return yaml.safe_load(open(file_path))
+
+
+def get_extension(file_path):
+    return file_path.split(".")[-1].strip()
+
+
+LOADERS = {"json": load_json, "yaml": load_yaml, "yml": load_yaml}
 
 
 def compare_data(data1, data2):
@@ -23,8 +30,8 @@ def compare_data(data1, data2):
             if k1 in data2.keys():
                 if isinstance(data2[k1], dict):
                     diff_dict[k1] = compare_data(data1[k1], data2[k1])
-                else:
-                    diff_dict[k1] = (v1, data2[k1], True, True)
+                    continue
+                diff_dict[k1] = (v1, data2[k1], True, True)
             else:
                 diff_dict[k1] = (v1, None, True, False)
         for k2, v2 in data2.items():
@@ -35,13 +42,15 @@ def compare_data(data1, data2):
     return dict(sorted(diff_dict.items()))
 
 
-def generate_diff(file1, file2, format=None):
-    f1, f2 = map(load_file, [file1, file2])
+def generate_diff(file1_path, file2_path, format=None):
+    f1, f2 = map(
+        lambda file: LOADERS.get(get_extension(file))(file),
+        [file1_path, file2_path],
+    )
     diff_dict = compare_data(f1, f2)
     if format in [None, "stylish"]:
-        out_str = stylish(diff_dict).rstrip("\n")
-    elif format == "plain":
-        out_str = plain(diff_dict).rstrip("\n")
-    elif format == "json":
+        return stylish(diff_dict).rstrip("\n")
+    if format == "plain":
+        return plain(diff_dict).rstrip("\n")
+    if format == "json":
         return json_parser(diff_dict)
-    return out_str
