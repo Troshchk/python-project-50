@@ -18,8 +18,8 @@ To build distributives run: `make build`.
 #### Step3: install package
 To install run the following command: `make package-install`.
 #### Step4: run package 
-To run the package you may use one of the following commands:
-`gendiff [-h] [--format FORMAT] first_file second_file`
+To run the package you may use one of the following commands:\
+`gendiff [-h] [--format FORMAT] first_file second_file` \
 `poetry run gendiff [-h] [--format FORMAT] first_file second_file`
 
 
