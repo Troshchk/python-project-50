@@ -1,167 +1,51 @@
 import gendiff.scripts.gendiff as gendiff
 import pytest
 
-
-@pytest.fixture
-def get_file1_json_path():
-    return "./tests/fixtures/file1.json"
-
-
-@pytest.fixture
-def get_file2_json_path():
-    return "./tests/fixtures/file2.json"
-
-
-@pytest.fixture
-def get_file1_nested_json_path():
-    return "./tests/fixtures/file1_nested.json"
-
-
-@pytest.fixture
-def get_file2_nested_json_path():
-    return "./tests/fixtures/file2_nested.json"
+FILE1_JSON = "./tests/fixtures/file1.json"
+FILE2_JSON = "./tests/fixtures/file2.json"
+FILE3_JSON = "./tests/fixtures/file3.json"
+FILE4_JSON = "./tests/fixtures/file4.json"
+FILE1_YAML = "./tests/fixtures/file1.yaml"
+FILE2_YAML = "./tests/fixtures/file2.yaml"
+FILE1_JSON_NESTED = "./tests/fixtures/file1_nested.json"
+FILE2_JSON_NESTED = "./tests/fixtures/file2_nested.json"
+FILE1_YAML_NESTED = "./tests/fixtures/file1_nested.yaml"
+FILE2_YAML_NESTED = "./tests/fixtures/file2_nested.yaml"
+OUTPUT_FLAT = "./tests/fixtures/output_flat"
+OUTPUT_NESTED = "./tests/fixtures/output_nested"
+OUTPUT_NESTED_PLAIN = "./tests/fixtures/output_nested_plain"
+OUTPUT_NESTED_JSON = "./tests/fixtures/output_nested_json"
+OUTPUT_HEXLET_TESTS = "./tests/fixtures/output_hexlet_tests"
 
 
-@pytest.fixture
-def get_file1_yaml_path():
-    return "./tests/fixtures/file1.yaml"
-
-
-@pytest.fixture
-def get_file2_yaml_path():
-    return "./tests/fixtures/file2.yaml"
-
-
-@pytest.fixture
-def get_file1_nested_yaml_path():
-    return "./tests/fixtures/file1_nested.yaml"
-
-
-@pytest.fixture
-def get_file2_nested_yaml_path():
-    return "./tests/fixtures/file2_nested.yaml"
-
-
-@pytest.fixture
-def get_res_diff():
-    f = open("./tests/fixtures/output_flat", "r")
+def get_test_output(output_file):
+    f = open(output_file, "r")
     test_output = f.read()
     f.close()
     return test_output
 
 
-@pytest.fixture
-def get_res_diff_nested():
-    f = open("./tests/fixtures/output_nested", "r")
-    test_output = f.read()
-    f.close()
-    return test_output
+@pytest.mark.parametrize(
+    "file1,file2,expected",
+    [
+        (FILE1_JSON, FILE2_JSON, OUTPUT_FLAT),
+        (FILE1_YAML, FILE2_YAML, OUTPUT_FLAT),
+        (FILE1_JSON, FILE2_YAML, OUTPUT_FLAT),
+        (FILE1_JSON_NESTED, FILE2_JSON_NESTED, OUTPUT_NESTED),
+        (FILE1_YAML_NESTED, FILE2_YAML_NESTED, OUTPUT_NESTED),
+        (FILE1_JSON_NESTED, FILE2_YAML_NESTED, OUTPUT_NESTED),
+        (FILE3_JSON, FILE4_JSON, OUTPUT_HEXLET_TESTS),
+    ],
+)
+def test_standard_format(file1, file2, expected):
+    assert gendiff.generate_diff(file1, file2) == get_test_output(expected)
 
 
-@pytest.fixture
-def get_res_diff_nested_plain():
-    f = open("./tests/fixtures/output_nested_plain", "r")
-    test_output = f.read()
-    f.close()
-    return test_output
-
-
-@pytest.fixture
-def get_json_nested_output():
-    f = open("./tests/fixtures/output_json_nested", "r")
-    test_output = f.read()
-    f.close()
-    return test_output
-
-
-@pytest.fixture
-def get_file3():
-    return "./tests/fixtures/file3.json"
-
-
-@pytest.fixture
-def get_file4():
-    return "./tests/fixtures/file4.json"
-
-
-@pytest.fixture
-def get_hex_out():
-    f = open("./tests/fixtures/output_hexlet_tests", "r")
-    test_output = f.read()
-    f.close()
-    return test_output
-
-
-def test_simple_case_jsons(
-    get_file1_json_path, get_file2_json_path, get_res_diff
-):
-    out = gendiff.generate_diff(get_file1_json_path, get_file2_json_path)
-    assert out == get_res_diff
-
-
-def test_simple_case_yamls(
-    get_file1_yaml_path, get_file2_yaml_path, get_res_diff
-):
-    out = gendiff.generate_diff(get_file1_yaml_path, get_file2_yaml_path)
-    assert out == get_res_diff
-
-
-def test_simple_case_json_and_yamls(
-    get_file1_json_path, get_file2_yaml_path, get_res_diff
-):
-    out = gendiff.generate_diff(get_file1_json_path, get_file2_yaml_path)
-    assert out == get_res_diff
-
-
-def test_nested_case_jsons(
-    get_file1_nested_json_path, get_file2_nested_json_path, get_res_diff_nested
-):
-    out = gendiff.generate_diff(
-        get_file1_nested_json_path, get_file2_nested_json_path
-    )
-    assert out == get_res_diff_nested
-
-
-def test_nested_case_json_and_yaml(
-    get_file1_nested_json_path, get_file2_nested_yaml_path, get_res_diff_nested
-):
-    out = gendiff.generate_diff(
-        get_file1_nested_json_path, get_file2_nested_yaml_path
-    )
-    assert out == get_res_diff_nested
-
-
-def test_nested_case_yamls(
-    get_file1_nested_yaml_path, get_file2_nested_yaml_path, get_res_diff_nested
-):
-    out = gendiff.generate_diff(
-        get_file1_nested_yaml_path, get_file2_nested_yaml_path
-    )
-    assert out == get_res_diff_nested
-
-
-def test_nested_case_plain(
-    get_file1_nested_json_path,
-    get_file2_nested_json_path,
-    get_res_diff_nested_plain,
-):
-    out = gendiff.generate_diff(
-        get_file1_nested_json_path, get_file2_nested_json_path, format="plain"
-    )
-    assert out == get_res_diff_nested_plain
-
-
-def test_nested_case_json(
-    get_file1_nested_json_path,
-    get_file2_nested_json_path,
-    get_json_nested_output,
-):
-    out = gendiff.generate_diff(
-        get_file1_nested_json_path, get_file2_nested_json_path, format="json"
-    )
-    assert out == get_json_nested_output
-
-
-def test_hex_case_stylish(get_file3, get_file4, get_hex_out):
-    out = gendiff.generate_diff(get_file3, get_file4)
-    assert out == get_hex_out
+@pytest.mark.parametrize(
+    "format,expected",
+    [("plain", OUTPUT_NESTED_PLAIN), ("json", OUTPUT_NESTED_JSON)],
+)
+def test_other_formats(format, expected):
+    assert gendiff.generate_diff(
+        FILE1_JSON_NESTED, FILE2_JSON_NESTED, format=format
+    ) == get_test_output(expected)
