@@ -1,21 +1,9 @@
 import gendiff.scripts.gendiff as gendiff
 import pytest
 
-FILE1_JSON = "./tests/fixtures/file1.json"
-FILE2_JSON = "./tests/fixtures/file2.json"
-FILE3_JSON = "./tests/fixtures/file3.json"
-FILE4_JSON = "./tests/fixtures/file4.json"
-FILE1_YAML = "./tests/fixtures/file1.yaml"
-FILE2_YAML = "./tests/fixtures/file2.yaml"
-FILE1_JSON_NESTED = "./tests/fixtures/file1_nested.json"
-FILE2_JSON_NESTED = "./tests/fixtures/file2_nested.json"
-FILE1_YAML_NESTED = "./tests/fixtures/file1_nested.yaml"
-FILE2_YAML_NESTED = "./tests/fixtures/file2_nested.yaml"
-OUTPUT_FLAT = "./tests/fixtures/output_flat"
-OUTPUT_NESTED = "./tests/fixtures/output_nested"
-OUTPUT_NESTED_PLAIN = "./tests/fixtures/output_nested_plain"
-OUTPUT_NESTED_JSON = "./tests/fixtures/output_nested_json"
-OUTPUT_HEXLET_TESTS = "./tests/fixtures/output_hexlet_tests"
+
+def get_path_to_file(filename, path="./tests/fixtures/"):
+    return f"{path}{filename}"
 
 
 def get_test_output(output_file):
@@ -23,6 +11,23 @@ def get_test_output(output_file):
     test_output = f.read()
     f.close()
     return test_output
+
+
+FILE1_JSON = get_path_to_file("file1.json")
+FILE2_JSON = get_path_to_file("file2.json")
+FILE3_JSON = get_path_to_file("file3.json")
+FILE4_JSON = get_path_to_file("file4.json")
+FILE1_YAML = get_path_to_file("file1.yaml")
+FILE2_YAML = get_path_to_file("file2.yaml")
+FILE1_JSON_NESTED = get_path_to_file("file1_nested.json")
+FILE2_JSON_NESTED = get_path_to_file("file2_nested.json")
+FILE1_YAML_NESTED = get_path_to_file("file1_nested.yaml")
+FILE2_YAML_NESTED = get_path_to_file("file2_nested.yaml")
+OUTPUT_FLAT = get_path_to_file("output_flat")
+OUTPUT_NESTED = get_path_to_file("output_nested")
+OUTPUT_NESTED_PLAIN = get_path_to_file("output_nested_plain")
+OUTPUT_NESTED_JSON = get_path_to_file("output_nested_json")
+OUTPUT_HEXLET_TESTS = get_path_to_file("output_hexlet_tests")
 
 
 @pytest.mark.parametrize(
@@ -38,7 +43,9 @@ def get_test_output(output_file):
     ],
 )
 def test_standard_format(file1, file2, expected):
-    assert gendiff.generate_diff(file1, file2, "stylish") == get_test_output(expected)
+    assert gendiff.generate_diff(file1, file2, "stylish") == get_test_output(
+        expected
+    )
 
 
 @pytest.mark.parametrize(
