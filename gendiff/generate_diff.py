@@ -46,11 +46,11 @@ def compare_data(data1, data2):
 
 
 def generate_diff(file1_path, file2_path, format=None):
-    f1, f2 = map(
+    file1_data, file2_data = map(
         lambda file: LOADERS.get(get_extension(file))(file),
         [file1_path, file2_path],
     )
-    diff_dict = compare_data(f1, f2)
+    diff_dict = compare_data(file1_data, file2_data)
     if format in [None, "stylish"]:
         return stylish(diff_dict).rstrip("\n")
     if format == "plain":
