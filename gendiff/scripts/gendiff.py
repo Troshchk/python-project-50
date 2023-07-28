@@ -22,7 +22,9 @@ def create_parser():
         a difference.''')
     parser.add_argument('first_file')
     parser.add_argument('second_file')
-    parser.add_argument('--format', '-f', help="set format of output")
+    parser.add_argument(
+        '--format', '-f', help="set format of output", default="stylish"
+    )
     return parser
 
 
