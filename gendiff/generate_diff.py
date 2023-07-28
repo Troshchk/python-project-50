@@ -45,7 +45,7 @@ def compare_data(data1, data2):
     return dict(sorted(diff_dict.items()))
 
 
-def generate_diff(file1_path, file2_path, format=None):
+def generate_diff(file1_path, file2_path, format):
     file1_data, file2_data = map(
         lambda file: LOADERS.get(get_extension(file))(file),
         [file1_path, file2_path],
