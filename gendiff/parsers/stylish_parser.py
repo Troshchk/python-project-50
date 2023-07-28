@@ -1,4 +1,4 @@
-from .common import jsonify
+from .common import jsonify, format_output
 
 NEW_LEVEL = "    "
 PATTERN = "{}{}{}: {}"
@@ -34,7 +34,7 @@ def create_dict_structure(input_dict, indent, addition="  "):
     return out_str_from_dict
 
 
-def stylish(diff_dict, indent="  ", out_str=""):
+def stylish_inner(diff_dict, indent="  ", out_str=""):
     out_str += "{\n"
     for k, v_in in diff_dict.items():
         if not isinstance(v_in, dict):
@@ -50,8 +50,12 @@ def stylish(diff_dict, indent="  ", out_str=""):
                 out_str += "\n"
         else:
             comparison_result = "  "
-            value = stylish(v_in, out_str='', indent=indent + NEW_LEVEL)
+            value = stylish_inner(v_in, out_str='', indent=indent + NEW_LEVEL)
             out_str += PATTERN.format(indent, comparison_result, k, value)
     out_str += f"{indent.replace('  ', '', 1)}"
-    out_str += "}"
+    out_str += "}\n"
     return out_str
+
+
+def stylish(diff_dict):
+    return format_output(stylish_inner)(diff_dict)

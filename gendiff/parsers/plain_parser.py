@@ -1,4 +1,5 @@
-from .common import jsonify
+from .common import jsonify, format_output
+
 
 PATTERN_PLAIN = "Property '{}' was {}\n"
 
@@ -27,7 +28,7 @@ def compare_values(v0, v1, v0_set, v1_set):
     return comparison_result
 
 
-def plain(diff_dict, key=''):
+def plain_inner(diff_dict, key=''):
     out_str = ""
     for k, v_in in diff_dict.items():
         if not isinstance(v_in, dict):
@@ -37,6 +38,10 @@ def plain(diff_dict, key=''):
                 out_str += PATTERN_PLAIN.format(f"{key}.{k}".lstrip("."),
                                                 comparison_result)
         else:
-            comparison_result = plain(v_in, key=f"{key}.{k}")
+            comparison_result = plain_inner(v_in, key=f"{key}.{k}")
             out_str += comparison_result
-    return out_str.rstrip("\n")
+    return out_str
+
+
+def plain(diff_dict):
+    return format_output(plain_inner)(diff_dict)
