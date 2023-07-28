@@ -39,4 +39,4 @@ def plain(diff_dict, key=''):
         else:
             comparison_result = plain(v_in, key=f"{key}.{k}")
             out_str += comparison_result
-    return out_str
+    return out_str.rstrip("\n")

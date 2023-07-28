@@ -53,5 +53,5 @@ def stylish(diff_dict, indent="  ", out_str=""):
             value = stylish(v_in, out_str='', indent=indent + NEW_LEVEL)
             out_str += PATTERN.format(indent, comparison_result, k, value)
     out_str += f"{indent.replace('  ', '', 1)}"
-    out_str += "}\n"
+    out_str += "}"
     return out_str
