@@ -1,31 +1,16 @@
 #!/usr/bin/env python3
-import argparse
-import sys
 from ..generate_diff import generate_diff
+from ..cli import parse_inputs
 
 
 def main():
-    parser = create_parser()
-    args = parser.parse_args(None if sys.argv[1:] else ['-h'])
+    args = parse_inputs()
     if args.first_file and args.second_file:
         output = generate_diff(args.first_file,
                                args.second_file,
                                format=args.format)
         print(output)
     return
-
-
-def create_parser():
-    parser = argparse.ArgumentParser(
-        prog='gendiff',
-        description='''Compares two configuration files and shows
-        a difference.''')
-    parser.add_argument('first_file')
-    parser.add_argument('second_file')
-    parser.add_argument(
-        '--format', '-f', help="set format of output", default="stylish"
-    )
-    return parser
 
 
 if __name__ == '__main__':
