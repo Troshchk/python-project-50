@@ -8,13 +8,14 @@ packages = [{include = "gendiff"}]
 
 [tool.poetry.dependencies]
 python = ">=3.10,<4.0"
-pytest-cov = "^3.0.0"
-flake8 = "^5.0.4"
 pyyaml = "^6.0"
 
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^7.1.2"
+pytest-cov = "^3.0.0"
+flake8 = "^5.0.4"
+
 
 [build-system]
 requires = ["poetry-core"]
