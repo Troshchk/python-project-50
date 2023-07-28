@@ -52,7 +52,7 @@ def generate_diff(file1_path, file2_path, format="stylish"):
     )
     diff_dict = compare_data(file1_data, file2_data)
     if format == "stylish":
-        return stylish(diff_dict).rstrip("\n")
+        return stylish(diff_dict)
     if format == "plain":
         return plain(diff_dict)
     if format == "json":
