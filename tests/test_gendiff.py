@@ -38,7 +38,7 @@ def get_test_output(output_file):
     ],
 )
 def test_standard_format(file1, file2, expected):
-    assert gendiff.generate_diff(file1, file2) == get_test_output(expected)
+    assert gendiff.generate_diff(file1, file2, "stylish") == get_test_output(expected)
 
 
 @pytest.mark.parametrize(
