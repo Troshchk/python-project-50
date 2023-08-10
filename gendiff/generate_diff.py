@@ -1,5 +1,6 @@
 import json
 import yaml
+from collections import namedtuple
 from .parsers.stylish_parser import stylish
 from .parsers.plain_parser import plain
 from .parsers.json_parser import json_parser
@@ -28,20 +29,24 @@ def compare_data(data1, data2):
     This is necessary to distinguish None coming from input and None specifying,
     that the field value does not exist in the input"""
     diff_dict = {}
+    ComparisonResult = namedtuple("ComparisonResult", ["val_1st_input",
+                                                       "val_2nd_input",
+                                                       "exists_in_1st_input",
+                                                       "exists_in_2nd_input"])
     if isinstance(data1, dict) and isinstance(data2, dict):
         for k1, v1 in data1.items():
             if k1 in data2.keys():
                 if isinstance(data2[k1], dict):
                     diff_dict[k1] = compare_data(data1[k1], data2[k1])
                     continue
-                diff_dict[k1] = (v1, data2[k1], True, True)
+                diff_dict[k1] = ComparisonResult(v1, data2[k1], True, True)
             else:
-                diff_dict[k1] = (v1, None, True, False)
+                diff_dict[k1] = ComparisonResult(v1, None, True, False)
         for k2, v2 in data2.items():
             if k2 not in diff_dict.keys():
-                diff_dict[k2] = (None, v2, False, True)
+                diff_dict[k2] = ComparisonResult(None, v2, False, True)
     else:
-        return (data1, data2, True, True)
+        return ComparisonResult(data1, data2, True, True)
     return dict(sorted(diff_dict.items()))
 
 

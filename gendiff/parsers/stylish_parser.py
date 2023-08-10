@@ -39,8 +39,9 @@ def stylish_inner(diff_dict, indent="  ", out_str=""):
     for k, v_in in diff_dict.items():
         if not isinstance(v_in, dict):
             v0, v1 = [v if isinstance(v, dict) else
-                      jsonify(v) for v in v_in[:2]]
-            v0_set, v1_set = v_in[2:]
+                      jsonify(v) for v in
+                      [v_in.val_1st_input, v_in.val_2nd_input]]
+            v0_set, v1_set = v_in.exists_in_1st_input, v_in.exists_in_2nd_input
             comparison_result, vals = compare_values(v0, v1, v0_set, v1_set)
             vals = [create_dict_structure(v, indent=indent + NEW_LEVEL)
                     if isinstance(v, dict) else v for v in vals]

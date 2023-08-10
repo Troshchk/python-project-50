@@ -32,8 +32,10 @@ def plain_inner(diff_dict, key=''):
     out_str = ""
     for k, v_in in diff_dict.items():
         if not isinstance(v_in, dict):
-            v0, v1, v0_set, v1_set = v_in
-            comparison_result = compare_values(v0, v1, v0_set, v1_set)
+            comparison_result = compare_values(v_in.val_1st_input,
+                                               v_in.val_2nd_input,
+                                               v_in.exists_in_1st_input,
+                                               v_in.exists_in_2nd_input)
             if comparison_result is not None:
                 out_str += PATTERN_PLAIN.format(f"{key}.{k}".lstrip("."),
                                                 comparison_result)
