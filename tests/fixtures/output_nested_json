@@ -3,61 +3,52 @@
         "follow": [
             null,
             false,
-            false,
-            true
+            "ADDED"
         ],
         "setting1": [
             "Value 1",
             "Value 1",
-            true,
-            true
+            "UNCHANGED"
         ],
         "setting2": [
             200,
             null,
-            true,
-            false
+            "REMOVED"
         ],
         "setting3": [
             true,
             null,
-            true,
-            true
+            "UPDATED"
         ],
         "setting4": [
             null,
             "blah blah",
-            false,
-            true
+            "ADDED"
         ],
         "setting5": [
             null,
             {
                 "key5": "value5"
             },
-            false,
-            true
+            "ADDED"
         ],
         "setting6": {
             "doge": {
                 "wow": [
                     "",
                     "so much",
-                    true,
-                    true
+                    "UPDATED"
                 ]
             },
             "key": [
                 "value",
                 "value",
-                true,
-                true
+                "UNCHANGED"
             ],
             "ops": [
                 null,
                 "vops",
-                false,
-                true
+                "ADDED"
             ]
         }
     },
@@ -65,22 +56,19 @@
         "baz": [
             "bas",
             "bars",
-            true,
-            true
+            "UPDATED"
         ],
         "foo": [
             "bar",
             "bar",
-            true,
-            true
+            "UNCHANGED"
         ],
         "nest": [
             {
                 "key": "value"
             },
             "str",
-            true,
-            true
+            "UPDATED"
         ]
     },
     "group2": [
@@ -91,8 +79,7 @@
             }
         },
         null,
-        true,
-        false
+        "REMOVED"
     ],
     "group3": [
         null,
@@ -104,7 +91,6 @@
             },
             "fee": 100500
         },
-        false,
-        true
+        "ADDED"
     ]
 }
