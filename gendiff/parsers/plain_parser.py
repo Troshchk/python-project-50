@@ -14,34 +14,33 @@ def format_string(v):
     return v
 
 
-def compare_values(v0, v1, v0_set, v1_set):
-    if v0 == v1:
-        comparison_result = None
-    elif v0_set is False:
-        comparison_result = f"added with value: {format_string(v1)}"
-    elif v1_set is False:
-        comparison_result = "removed"
-    else:
+def parse_values(v0, v1, status):
+    if status == "UNCHANGED":
+        parsing_result = None
+    elif status == "ADDED":
+        parsing_result = f"added with value: {format_string(v1)}"
+    elif status == "REMOVED":
+        parsing_result = "removed"
+    elif status == "UPDATED":
         v0 = format_string(v0)
         v1 = format_string(v1)
-        comparison_result = f"updated. From {v0} to {v1}"
-    return comparison_result
+        parsing_result = f"updated. From {v0} to {v1}"
+    return parsing_result
 
 
 def plain_inner(diff_dict, key=''):
     out_str = ""
-    for k, v_in in diff_dict.items():
-        if not isinstance(v_in, dict):
-            comparison_result = compare_values(v_in.val_1st_input,
-                                               v_in.val_2nd_input,
-                                               v_in.exists_in_1st_input,
-                                               v_in.exists_in_2nd_input)
-            if comparison_result is not None:
+    for k, comparison in diff_dict.items():
+        if not isinstance(comparison, dict):
+            parsing_result = parse_values(comparison.val_1st_input,
+                                          comparison.val_2nd_input,
+                                          comparison.status)
+            if parsing_result is not None:
                 out_str += PATTERN_PLAIN.format(f"{key}.{k}".lstrip("."),
-                                                comparison_result)
+                                                parsing_result)
         else:
-            comparison_result = plain_inner(v_in, key=f"{key}.{k}")
-            out_str += comparison_result
+            parsing_result = plain_inner(comparison, key=f"{key}.{k}")
+            out_str += parsing_result
     return out_str
 
 

@@ -4,20 +4,20 @@ NEW_LEVEL = "    "
 PATTERN = "{}{}{}: {}"
 
 
-def compare_values(v0, v1, v0_set, v1_set):
-    if v0 == v1:
-        comparison_result = ["  "]
-        vals = [v0]
-    elif v0_set is False:
-        comparison_result = ["+ "]
-        vals = [v1]
-    elif v1_set is False:
-        comparison_result = ["- "]
-        vals = [v0]
-    else:
-        comparison_result = ["- ", "+ "]
-        vals = [v0, v1]
-    return comparison_result, vals
+PADDING_RESULT_MAPPING = {
+    "REMOVED": ["- "],
+    "ADDED": ["+ "],
+    "UPDATED": ["- ", "+ "],
+    "UNCHANGED": ["  "]
+}
+
+
+VALUES_FOR_PARSING = {
+    "REMOVED": lambda x: [x.val_1st_input],
+    "ADDED": lambda x: [x.val_2nd_input],
+    "UPDATED": lambda x: [x.val_1st_input, x.val_2nd_input],
+    "UNCHANGED": lambda x: [x.val_1st_input]
+}
 
 
 def create_dict_structure(input_dict, indent, addition="  "):
@@ -36,23 +36,24 @@ def create_dict_structure(input_dict, indent, addition="  "):
 
 def stylish_inner(diff_dict, indent="  ", out_str=""):
     out_str += "{\n"
-    for k, v_in in diff_dict.items():
-        if not isinstance(v_in, dict):
-            v0, v1 = [v if isinstance(v, dict) else
-                      jsonify(v) for v in
-                      [v_in.val_1st_input, v_in.val_2nd_input]]
-            v0_set, v1_set = v_in.exists_in_1st_input, v_in.exists_in_2nd_input
-            comparison_result, vals = compare_values(v0, v1, v0_set, v1_set)
+    for k, comparison in diff_dict.items():
+        if not isinstance(comparison, dict):
+            status = comparison.status
+            padding_result = PADDING_RESULT_MAPPING[status]
+            vals = VALUES_FOR_PARSING[status](comparison)
+            vals = [v if isinstance(v, dict) else
+                    jsonify(v) for v in vals]
             vals = [create_dict_structure(v, indent=indent + NEW_LEVEL)
                     if isinstance(v, dict) else v for v in vals]
-            for i in zip(comparison_result, vals):
-                comparison_result, value = i[0], i[1]
-                out_str += PATTERN.format(indent, comparison_result, k, value)
+            for parsed in zip(padding_result, vals):
+                padding_result, value = parsed[0], parsed[1]
+                out_str += PATTERN.format(indent, padding_result, k, value)
                 out_str += "\n"
         else:
-            comparison_result = "  "
-            value = stylish_inner(v_in, out_str='', indent=indent + NEW_LEVEL)
-            out_str += PATTERN.format(indent, comparison_result, k, value)
+            padding_result = "  "
+            value = stylish_inner(comparison, out_str='',
+                                  indent=indent + NEW_LEVEL)
+            out_str += PATTERN.format(indent, padding_result, k, value)
     out_str += f"{indent.replace('  ', '', 1)}"
     out_str += "}\n"
     return out_str
