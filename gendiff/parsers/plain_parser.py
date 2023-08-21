@@ -38,9 +38,9 @@ def plain_inner(diff_dict, key=''):
             if parsing_result is not None:
                 out_str += PATTERN_PLAIN.format(f"{key}.{k}".lstrip("."),
                                                 parsing_result)
-        else:
-            parsing_result = plain_inner(comparison, key=f"{key}.{k}")
-            out_str += parsing_result
+            continue
+        parsing_result = plain_inner(comparison, key=f"{key}.{k}")
+        out_str += parsing_result
     return out_str
 
 

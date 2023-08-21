@@ -49,11 +49,11 @@ def stylish_inner(diff_dict, indent="  ", out_str=""):
                 padding_result, value = parsed[0], parsed[1]
                 out_str += PATTERN.format(indent, padding_result, k, value)
                 out_str += "\n"
-        else:
-            padding_result = "  "
-            value = stylish_inner(comparison, out_str='',
-                                  indent=indent + NEW_LEVEL)
-            out_str += PATTERN.format(indent, padding_result, k, value)
+            continue
+        padding_result = "  "
+        value = stylish_inner(comparison, out_str='',
+                              indent=indent + NEW_LEVEL)
+        out_str += PATTERN.format(indent, padding_result, k, value)
     out_str += f"{indent.replace('  ', '', 1)}"
     out_str += "}\n"
     return out_str
