@@ -1,4 +1,8 @@
 from collections import namedtuple
+UPDATED = "UPDATED"
+UNCHANGED = "UNCHANGED"
+ADDED = "ADDED"
+REMOVED = "REMOVED"
 
 
 def compare_data(data1, data2):
@@ -12,18 +16,18 @@ def compare_data(data1, data2):
                                                        "status"])
     if not (isinstance(data1, dict) and isinstance(data2, dict)):
         return ComparisonResult(data1, data2,
-                                "UPDATED" if data1 != data2 else "UNCHANGED")
+                                UPDATED if data1 != data2 else UNCHANGED)
     for k1, v1 in data1.items():
         if k1 in data2.keys():
             if isinstance(data2[k1], dict):
                 diff_dict[k1] = compare_data(data1[k1], data2[k1])
                 continue
             diff_dict[k1] = ComparisonResult(v1, data2[k1],
-                                             "UPDATED" if v1 != data2[k1]
-                                             else "UNCHANGED")
+                                             UPDATED if v1 != data2[k1]
+                                             else UNCHANGED)
             continue
-        diff_dict[k1] = ComparisonResult(v1, None, "REMOVED")
+        diff_dict[k1] = ComparisonResult(v1, None, REMOVED)
     for k2, v2 in data2.items():
         if k2 not in diff_dict.keys():
-            diff_dict[k2] = ComparisonResult(None, v2, "ADDED")
+            diff_dict[k2] = ComparisonResult(None, v2, ADDED)
     return dict(sorted(diff_dict.items()))

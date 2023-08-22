@@ -1,4 +1,5 @@
 from .common import jsonify, format_output
+from ..comparer import ADDED, UNCHANGED, UPDATED, REMOVED
 
 
 PATTERN_PLAIN = "Property '{}' was {}\n"
@@ -15,13 +16,13 @@ def format_string(v):
 
 
 def parse_values(v0, v1, status):
-    if status == "UNCHANGED":
+    if status == UNCHANGED:
         parsing_result = None
-    elif status == "ADDED":
+    elif status == ADDED:
         parsing_result = f"added with value: {format_string(v1)}"
-    elif status == "REMOVED":
+    elif status == REMOVED:
         parsing_result = "removed"
-    elif status == "UPDATED":
+    elif status == UPDATED:
         v0 = format_string(v0)
         v1 = format_string(v1)
         parsing_result = f"updated. From {v0} to {v1}"

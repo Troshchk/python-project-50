@@ -1,22 +1,24 @@
 from .common import jsonify, format_output
+from ..comparer import ADDED, UNCHANGED, UPDATED, REMOVED
+
 
 NEW_LEVEL = "    "
 PATTERN = "{}{}{}: {}"
 
 
 PADDING_RESULT_MAPPING = {
-    "REMOVED": ["- "],
-    "ADDED": ["+ "],
-    "UPDATED": ["- ", "+ "],
-    "UNCHANGED": ["  "]
+    REMOVED: ["- "],
+    ADDED: ["+ "],
+    UPDATED: ["- ", "+ "],
+    UNCHANGED: ["  "]
 }
 
 
 VALUES_FOR_PARSING = {
-    "REMOVED": lambda x: [x.val_1st_input],
-    "ADDED": lambda x: [x.val_2nd_input],
-    "UPDATED": lambda x: [x.val_1st_input, x.val_2nd_input],
-    "UNCHANGED": lambda x: [x.val_1st_input]
+    REMOVED: lambda x: [x.val_1st_input],
+    ADDED: lambda x: [x.val_2nd_input],
+    UPDATED: lambda x: [x.val_1st_input, x.val_2nd_input],
+    UNCHANGED: lambda x: [x.val_1st_input]
 }
 
 
