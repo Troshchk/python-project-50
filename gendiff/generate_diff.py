@@ -2,7 +2,7 @@ from .comparer import compare_data
 from .formatters.stylish_formatter import stylish
 from .formatters.plain_formatter import plain
 from .formatters.json_fomatter import json_parser
-from .loaders import get_extension, LOADERS
+from .parsers import get_extension, LOADERS
 
 
 def generate_diff(file1_path, file2_path, format="stylish"):
