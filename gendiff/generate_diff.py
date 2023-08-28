@@ -4,7 +4,6 @@ from .parsers import PARSERS
 import pathlib
 
 
-
 def generate_diff(file1_path, file2_path, format="stylish"):
     file1_data, file2_data = map(
         lambda file: PARSERS.get(pathlib.Path(file).suffix)(file),
