@@ -1,7 +1,7 @@
 from .comparer import compare_data
-from .parsers.stylish_parser import stylish
-from .parsers.plain_parser import plain
-from .parsers.json_parser import json_parser
+from .formatters.stylish_formatter import stylish
+from .formatters.plain_formatter import plain
+from .formatters.json_fomatter import json_parser
 from .loaders import get_extension, LOADERS
 
 
