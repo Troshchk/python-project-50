@@ -7,3 +7,8 @@ FORMATTERS = {
     "plain": plain,
     "json": json_parser
 }
+
+
+def format_output(format, diff_dict):
+    formatter = FORMATTERS.get(format)
+    return formatter(diff_dict)
